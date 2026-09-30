@@ -12,7 +12,7 @@ let package = Package(
         // FriBidi v1.0.16 and libunibreak 6.1, one static archive.
         .binaryTarget(
             name: "Libass",
-            url: "https://github.com/l984-451/LibassBuild/releases/download/0.17.5/Libass.xcframework.zip",
+            url: "https://github.com/l984-451/LibassBuild/releases/download/0.17.5-1/Libass.xcframework.zip",
             checksum: "0045ab962f5bb9f68c90d2be2a3076eedcd1fc023301a95078be448adcb67d55"
         ),
     ]

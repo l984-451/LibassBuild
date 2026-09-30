@@ -27,5 +27,11 @@ Needs Xcode with the tvOS SDKs, meson, ninja and pkg-config.
     ./build.sh
     swift package compute-checksum dist/Libass.xcframework.zip
 
-Put the checksum in `Package.swift`, commit, tag the libass version, and attach
-`dist/Libass.xcframework.zip` to the release of that tag.
+Put the checksum in `Package.swift`, commit, tag `<libass version>-<build revision>`
+(for example `0.17.5-1`), and attach `dist/Libass.xcframework.zip` to the release
+of that tag. Never move a published tag: SwiftPM records each tag's revision and
+refuses one that changes.
+
+The module map lives in `Support/`, never at the package root: SwiftPM treats a
+root `module.modulemap` as a legacy system-library package and ignores the
+binary target.
