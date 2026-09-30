@@ -111,11 +111,15 @@ build_platform() { # sdk triple subsystem slice
         -Dprofile=disabled -Dcompare=disabled -Dfuzz=disabled
 
     # One archive, so Rivulet links a single binary target.
-    mkdir -p "$WORK/out/$slice/Headers/ass"
+    # Headers nest under Headers/Libass: Xcode copies every static
+    # xcframework's Headers into one shared include/ directory, so a module
+    # map at the Headers root collides with any other package that does the
+    # same (LibDovi's Dovi.xcframework does).
+    mkdir -p "$WORK/out/$slice/Headers/Libass/ass"
     libtool -static -o "$WORK/out/$slice/libass.a" \
         "$prefix"/lib/lib{ass,freetype,harfbuzz,fribidi,unibreak}.a
-    cp "$prefix/include/ass/ass.h" "$prefix/include/ass/ass_types.h" "$WORK/out/$slice/Headers/ass/"
-    cp "$ROOT/Support/module.modulemap" "$WORK/out/$slice/Headers/"
+    cp "$prefix/include/ass/ass.h" "$prefix/include/ass/ass_types.h" "$WORK/out/$slice/Headers/Libass/ass/"
+    cp "$ROOT/Support/module.modulemap" "$WORK/out/$slice/Headers/Libass/"
 }
 
 mkdir -p "$SRC"
@@ -135,7 +139,7 @@ xcodebuild -create-xcframework \
     -library "$WORK/out/tvos/libass.a" -headers "$WORK/out/tvos/Headers" \
     -library "$WORK/out/tvsimulator/libass.a" -headers "$WORK/out/tvsimulator/Headers" \
     -output "$DIST/Libass.xcframework"
-(cd "$DIST" && ditto -c -k --sequesterRsrc --keepParent Libass.xcframework Libass.xcframework.zip)
+(cd "$DIST" && ditto -c -k --norsrc --keepParent Libass.xcframework Libass.xcframework.zip)
 
 mkdir -p "$ROOT/LICENSES"
 cp "$SRC/libass/COPYING" "$ROOT/LICENSES/libass.txt"

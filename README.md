@@ -34,4 +34,6 @@ refuses one that changes.
 
 The module map lives in `Support/`, never at the package root: SwiftPM treats a
 root `module.modulemap` as a legacy system-library package and ignores the
-binary target.
+binary target. Inside the xcframework it sits in `Headers/Libass/`, never at the
+`Headers` root: Xcode copies every static xcframework's headers into one shared
+`include/` directory, and two root module maps collide.
