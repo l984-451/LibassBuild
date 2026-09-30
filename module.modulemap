@@ -1,0 +1,9 @@
+module Libass [system] {
+    header "ass/ass.h"
+    link "iconv"
+    link "z"
+    link framework "CoreFoundation"
+    link framework "CoreGraphics"
+    link framework "CoreText"
+    export *
+}
