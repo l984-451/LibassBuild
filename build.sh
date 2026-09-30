@@ -115,7 +115,7 @@ build_platform() { # sdk triple subsystem slice
     libtool -static -o "$WORK/out/$slice/libass.a" \
         "$prefix"/lib/lib{ass,freetype,harfbuzz,fribidi,unibreak}.a
     cp "$prefix/include/ass/ass.h" "$prefix/include/ass/ass_types.h" "$WORK/out/$slice/Headers/ass/"
-    cp "$ROOT/module.modulemap" "$WORK/out/$slice/Headers/"
+    cp "$ROOT/Support/module.modulemap" "$WORK/out/$slice/Headers/"
 }
 
 mkdir -p "$SRC"
